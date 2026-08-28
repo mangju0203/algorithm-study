@@ -21,14 +21,26 @@
 4.뽑힌 숫자의 서로 다른 종류 개수 출력
 
 몰랏던 부분
-1. 그냥 정렬하고 싶으면 .sort()를 쓰면 됨.....
+1. 그냥 정렬하고 싶으면 .sort()를 쓰면 됨..... -> sorted()는 정렬한 새로운 리스트를 만들어줌, 오름차순
 2. lamda x: 는 리스트의 원소를 하나씩 x에 넣어서 그 원소의 정렬 기준값을 만듦 -> 아직 제대로 이해가 안돼서 좀 더 공부 필요
+3. 많이 등장한 순서부터 정렬하고 싶으니까 key = 사용 -> key는 각 숫자를 어떤 기준으로 정렬할건지 알려줌
+4. lambda x: (-tangerine.count(x), x)가 정렬 가준임 -> x에는 리스트의 원소가 하나씩 들어감
+4. -가 붙는 이유는 sorted는 오름차순이니까 가장 많이 등장한 수부터 앞에 오게 하려고 
+5. 파이썬은 튜플을 정렬할 때 첫번쨰 값을 비교, 첫번째 같이 같으면 두 번째 값을 비교
+6. 리스트에서 중복을 제거하려면 set()을 사용
+
+7. counter는 리스트 안에 각 값이 몇 번 나오는지 자동으로 세어주는 도구 
+
+발생한 오류
+1. 시간 초과: 리스트의 각 원소마다 리스트 전체에서 중복을 검사해서 시간 초과 발생
 """
+from collections import Counter
 def solution(k, tangerine):
     
     answer = 0
-    sort_num = sorted(tangerine, key=lambda x:(-tangerine.count(x), x))
-    for i in range(tangerine):
-        print(i)
+    counts = Counter(tangerine)
+    sort_num = sorted(tangerine, key=lambda x: (-counts[x],x))
+    answer = len(set(sort_num[:k]))
+
     
     return answer
